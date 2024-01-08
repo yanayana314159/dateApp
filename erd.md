@@ -1,4 +1,4 @@
-::: mermaid
+```mermaid
 erDiagram
 Auth ||--||Users : ""
 Auth {
@@ -78,7 +78,7 @@ int atomosphre_id "雰囲気のレビュー"
 str review "総合的なレビュー"
 }
 
-:::
+```
 
 <h2>Auth</h2>
 認証用のテーブル
