@@ -1,42 +1,27 @@
-//getserverでエラーが起きたが，これはprismaとprisma/clientのバージョンを揃えることでなんとかなかった
+import Head from "next/head";
+import { createClient } from "@supabase/supabase-js";
+import { Auth } from "@supabase/auth-ui-react";
 
-import type { GetServerSideProps } from "next";
-import React from "react";
-import { PostForm } from "../components/PostForm";
-import prisma, { Post } from "../lib/prisma";
+export default function Google() {
+  const supabase = createClient(
+    "https://scvsimrzjioiydddawjt.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjdnNpbXJ6amlvaXlkZGRhd2p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDM4MzIyMDIsImV4cCI6MjAxOTQwODIwMn0.l5o-pXxG9Q_DDpfOaUwpe8AFQQ6BCzPnWcCzd5Jnisg"
+  );
 
-type Props = {
-  posts: Pick<Post, "id", "title" | "content">[];
-};
-
-export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
-  const posts = await prisma.post.findMany({
-    select: {
-      title: true,
-      content: true,
-      id: true,
-    },
-  });
-  return {
-    props: {
-      posts,
-    },
-  };
-};
-
-export default function Index(props: Props) {
   return (
     <>
-      <PostForm />
-      <div>post count: {props.posts.length}</div>
-      {props.posts.map((post) => {
-        return (
-          <div key={post.id}>
-            <h3>{post.title}</h3>
-            <p>{post.content}</p>
+      <div>
+        <Head>
+          <title>Google認証画面</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <main>
+          <div>
+            <Auth supabaseClient={supabase} providers={["google"]} />
           </div>
-        );
-      })}
+        </main>
+        <footer></footer>
+      </div>
     </>
   );
 }
