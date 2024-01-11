@@ -5,8 +5,8 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 
 export default function Google() {
   const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_ANON
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_ANON!
   );
 
   return (
