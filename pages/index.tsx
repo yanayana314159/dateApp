@@ -1,32 +1,25 @@
-import Head from "next/head";
-import { createClient } from "@supabase/supabase-js";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
+import React from "react";
+import Link from "next/link";
 
-export default function Google() {
-  const supabase = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_ANON!
-  );
-
+const Home: React.FC = () => {
   return (
     <>
+      <header>dateApp</header>
       <div>
-        <Head>
-          <title>Google認証画面</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <main>
-          <div>
-            <Auth
-              supabaseClient={supabase}
-              appearance={{ theme: ThemeSupa }}
-              providers={["google"]}
-            />
-          </div>
-        </main>
-        <footer></footer>
+        <p>デートアプリのホーム画面です</p>
+        <br />
+        <Link href="/auth">ログインとサインアップはこちらから</Link>
+        <h2>なぜこれを作ったか</h2>
+        <p>
+          デートを日程調整から、店の場所まで全てを完結できたら嬉しいという声を聞いたのでポートフォリオとして作りました．
+        </p>
+        <a href="https://github.com/yanayana314159/dateApp" target="_blank">
+          Github
+        </a>
+        <br />
       </div>
     </>
   );
-}
+};
+
+export default Home;
