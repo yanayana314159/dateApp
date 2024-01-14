@@ -1,43 +1,28 @@
-import React, { useEffect } from "react";
-import Link from "next/link";
-import { SupabaseClient, createClient } from "@supabase/supabase-js";
-import { useRouter } from "next/router";
-import { supabase } from "../../utils/supabase";
+import React, { useEffect, useState } from "react";
+import { redirect, useRouter } from "next/navigation";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import SignOutBtn from "../../components/signOutBtn";
+import AuthButtonServer from "../../components/authButtonServer";
+import { string } from "zod";
+import { Database } from "../../../lib/database.types";
 
-export default function Home() {
-  /*
-  const supabase: SupabaseClient = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_ANON!
-  );
+export default async function Home() {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) {
+    //セッションがない場合にはauthに飛びます.展望：このセッションを切り出して使えるようにする．
+    redirect("/userpage/auth");
+  }
 
-  const router = useRouter();
- 
-  useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const { data: session } = await supabase.auth.getSession();
-        if (!session) {
-          // ログインされていない場合、ログインページにリダイレクト
-          await router.push("/auth");
-        }
-      } catch (error) {
-        console.error("Error checking session:", error);
-      }
-    };
-
-    checkSession();
-  }, [supabase, router]);
-*/
   return (
     <>
       <header>dateApp</header>
 
       <div>
-        <SignOutBtn />
+        <h2>認証済みのログインページです</h2>
+        <AuthButtonServer />
         <p>デートアプリのログイン後のホーム画面です</p>
       </div>
     </>

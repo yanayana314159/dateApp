@@ -1,17 +1,32 @@
 import { cookies } from "next/headers";
-import AuthButton from "../../components/authButton";
+import AuthButtonServer from "../../components/authButtonServer";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { redirect } from "next/navigation";
+import { Database } from "../../../lib/database.types";
 
-export default function Google() {
+export default async function Google() {
+  const supabase = createServerComponentClient<Database>({ cookies });
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  /*if (session) {
+    //セッションがあればhomeに飛びます
+    redirect("/userpage/home");
+  }
+*/
   return (
     <>
       <header>dateApp</header>
       <div>
+        <h2>ログインページです</h2>
         <a>googleアカウントでログインを行なってください</a>
       </div>
       <div>
         <main>
           <div>
-            <AuthButton />
+            <AuthButtonServer />
           </div>
         </main>
         <footer></footer>
