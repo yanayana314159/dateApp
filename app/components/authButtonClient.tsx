@@ -15,6 +15,7 @@ const AuthButtonClient = ({ session }: { session: Session | null }) => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
+        scopes: "https://www.googleapis.com/auth/calendar.readonly",
         redirectTo: "http://localhost:3000/api/callback",
       },
     });

@@ -6,20 +6,25 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/userpage/home/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/userpage/home/page.js"
+    ],
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/userpage/auth/page": [
+    "/userpage/googlecalendar/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/userpage/auth/page.js"
+      "static/chunks/app/userpage/googlecalendar/page.js"
     ],
-    "/userpage/home/page": [
+    "/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/userpage/home/page.js"
+      "static/chunks/app/not-found.js"
     ]
   }
 }

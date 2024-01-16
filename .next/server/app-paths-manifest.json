@@ -1,6 +1,5 @@
 {
-  "/api/callback/route": "app/api/callback/route.js",
-  "/page": "app/page.js",
+  "/not-found": "app/not-found.js",
   "/userpage/home/page": "app/userpage/home/page.js",
-  "/userpage/auth/page": "app/userpage/auth/page.js"
+  "/page": "app/page.js"
 }
