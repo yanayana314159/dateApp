@@ -1,5 +1,6 @@
 {
-  "/not-found": "app/not-found.js",
-  "/userpage/home/page": "app/userpage/home/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/userpage/googlecalendar/page": "app/userpage/googlecalendar/page.js",
+  "/userpage/auth/page": "app/userpage/auth/page.js",
+  "/userpage/home/page": "app/userpage/home/page.js"
 }

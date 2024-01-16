@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import AuthButtonServer from "../../components/authButtonServer";
 import { string } from "zod";
 import { Database } from "../../../lib/database.types";
+import Link from "next/link";
 
 export default async function Home() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -24,6 +25,7 @@ export default async function Home() {
         <h2>認証済みのログインページです</h2>
         <AuthButtonServer />
         <p>デートアプリのログイン後のホーム画面です</p>
+        <Link href="/userpage/googlecalendar">カレンダーページはこちら</Link>
       </div>
     </>
   );
