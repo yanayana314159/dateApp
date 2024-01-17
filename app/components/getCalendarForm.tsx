@@ -3,6 +3,7 @@ import { redirect, useRouter } from "next/navigation";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { Database } from "../../lib/database.types";
+import FullCalendarPage from "./fullCalendar";
 
 export default async function GoogleCalenderform() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -29,6 +30,7 @@ export default async function GoogleCalenderform() {
       }
     )
   ).json();
+
   const eventsData = events?.items?.map(
     (event: { summary: String; start: any; end: any }) => {
       //日付の処理を行う
@@ -46,9 +48,9 @@ export default async function GoogleCalenderform() {
       const endDate = event.end.date ? new Date(event.end.date) : null;
 
       return {
-        summary: event.summary,
-        start: startDateTime || startDate,
-        end: endDateTime || endDate,
+        title: event.summary,
+        start: startDateTime ? new Date(startDateTime) : startDate,
+        end: endDateTime ? new Date(endDateTime) : endDate,
       };
     }
   );
@@ -56,7 +58,13 @@ export default async function GoogleCalenderform() {
   return (
     <>
       <p>カレンダー情報</p>
-      <p suppressHydrationWarning={true}>{JSON.stringify(eventsData)}</p>
+
+      <FullCalendarPage event={eventsData} />
     </>
   );
 }
+
+/*
+  <p suppressHydrationWarning={true}>{JSON.stringify(eventsData)}</p>
+
+*/
