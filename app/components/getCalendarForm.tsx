@@ -4,34 +4,11 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { Database } from "../../lib/database.types";
 import FullCalendarPage from "./fullCalendar";
+import { error } from "console";
+import AuthButtonServer from "./authButtonServer";
 
-export default async function GoogleCalenderform() {
-  const supabase = createServerComponentClient<Database>({ cookies });
-  const currentDate = new Date();
-  const timeMin = currentDate.toISOString();
-  const params = new URLSearchParams({ timeMin });
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  if (!session) {
-    //セッションがない場合にはauthに飛びます.展望：このセッションを切り出して使えるようにする．
-    redirect("/userpage/auth");
-  }
-  const provider_token = session?.provider_token;
-  const events: any | null = await (
-    await fetch(
-      `https://www.googleapis.com/calendar/v3/calendars/primary/events?${params}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${provider_token}`,
-        },
-      }
-    )
-  ).json();
-
-  const eventsData = events?.items?.map(
+const toEventsData = (events: any) => {
+  return events?.items?.map(
     (event: { summary: String; start: any; end: any }) => {
       //日付の処理を行う
       const startDateTime = event.start.dateTime
@@ -54,17 +31,60 @@ export default async function GoogleCalenderform() {
       };
     }
   );
+};
+
+export default async function GetCalendarForm() {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const currentDate = new Date();
+  const timeMin = currentDate.toISOString();
+  const params = new URLSearchParams({ timeMin });
+  let eventsData = null;
+  let errorMessage = null;
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const provider_token = session?.provider_token;
+
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/calendar/v3/calendars/primary/events?${params}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${provider_token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw new Error(`Failed to fetch events: ${errorResponse.error.message}`);
+    }
+
+    const events: any | null = await response.json();
+    eventsData = toEventsData(events);
+  } catch (e: any) {
+    console.error(e);
+    errorMessage = e.message;
+  }
 
   return (
     <>
       <p>カレンダー情報</p>
 
-      <FullCalendarPage event={eventsData} />
+      {eventsData ? (
+        <FullCalendarPage event={eventsData} />
+      ) : (
+        <>
+          <p>
+            カレンダー情報がありません。ログアウトしてから再度ログインをお願いします。
+          </p>
+          <br />
+          {errorMessage && <p>エラーが発生しました</p>}
+          <AuthButtonServer />
+        </>
+      )}
     </>
   );
 }
-
-/*
-  <p suppressHydrationWarning={true}>{JSON.stringify(eventsData)}</p>
-
-*/
