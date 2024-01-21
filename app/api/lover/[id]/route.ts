@@ -84,35 +84,26 @@ export const GET = async (req: Request, res: NextResponse) => {
       await prisma.$disconnect();
     }
 
-  }
+  };
+
+//恋人のユーザーIDを削除する
+export const DELETE = async (req: Request, res: NextResponse) => {
   
-/*
-  export const PUT = async (req: Request, res: NextResponse) => {
-    try {
-      const user_id: string = req.url.split("/api/lover/")[1]; //ID取得
-      const request = await req.json(); 
-      const lover_email = request.lover_email;//恋人のメールアドレスを取得
-      await main();
-      //恋人のメールアドレスから恋人のIDを取得
-      const lover_profile = await prisma.profiles.findFirst({  where: { email:{contains:lover_email } } });
+  try {
+    const user_id: string = req.url.split("/api/lover/")[1]; //ID取得
+    const deleteProfile =await prisma.profiles.update({
+      data: {
+        lover_id:null ,
+      },
+      where: {
+        id: user_id,
+      },
       
-
-      if(lover_profile){  //恋人のユーザーのレスポンスがある場合
-        const lover_id =  lover_profile.id;
-        return NextResponse.json({ message: "Success", lover_id }, { status: 200 });
-        }
-        else{ //レスポンスがない場合
-          return NextResponse.json({ message: "Error"+" ユーザーが見つかりません。" }, { status: 404 });
-          
-        }
-        
-      }
-    
-    catch (err) {
-      return NextResponse.json({ message: "Error"+JSON.stringify(err) }, { status: 500 });
-    } finally {
-      await prisma.$disconnect();
-    }
-
+    })
+    return NextResponse.json({ message: "Success" }, { status: 200 });
+  } catch (err) {
+    return NextResponse.json({ message: "Error" }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
   }
-  */
+};

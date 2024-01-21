@@ -17,7 +17,7 @@ export default async function Home() {
     <>
       <header>dateApp</header>
 
-      <div>
+      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 m-10 border border-black-400">
         <h2>認証済みのログインページです</h2>
         <a>ようこそ{name}さん</a>
         <br />

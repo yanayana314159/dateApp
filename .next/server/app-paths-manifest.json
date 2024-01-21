@@ -1,6 +1,6 @@
 {
+  "/not-found": "app/not-found.js",
   "/userpage/calendar/page": "app/userpage/calendar/page.js",
   "/userpage/home/page": "app/userpage/home/page.js",
-  "/userpage/lover/page": "app/userpage/lover/page.js",
-  "/api/lover/[id]/route": "app/api/lover/[id]/route.js"
+  "/userpage/lover/page": "app/userpage/lover/page.js"
 }

@@ -1,7 +1,4 @@
 import checkSession from "../../components/checkSession";
-import { redirect, useRouter } from "next/navigation";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import FormComponent from "../../components/inputForm";
 
@@ -28,35 +25,37 @@ export default async function LoverPage() {
 
   return (
     <>
-      <div>
-        <a>
-          {lover_email == null
-            ? "恋人のメールアドレス情報を登録してください"
-            : "恋人のメールアドレス情報を変更できます"}
-        </a>
-        {lover_id == null ? (
-          ""
-        ) : (
-          <>
-            <br />
-            あなたの恋人として設定されているメールアドレス：{lover_email}
-          </>
-        )}
-        <a></a>
-      </div>
-      <br />
-      <br />
-      <FormComponent
-        email={email}
-        lover_email={lover_email}
-        user_id={user_id}
-      />
+      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 m-10 border border-black-400">
+        <div>
+          <a>
+            {lover_email == null
+              ? "恋人のメールアドレス情報を登録してください"
+              : "恋人のメールアドレス情報を変更できます"}
+          </a>
+          {lover_id == null ? (
+            ""
+          ) : (
+            <>
+              <br />
+              あなたの恋人として設定されているメールアドレス：{lover_email}
+            </>
+          )}
+          <a></a>
+        </div>
+        <br />
+        <br />
+        <FormComponent
+          email={email}
+          lover_email={lover_email}
+          user_id={user_id}
+        />
 
-      <Link href="/userpage/home">
-        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-          ホームに戻る
-        </button>
-      </Link>
+        <Link href="/userpage/home">
+          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+            ホームに戻る
+          </button>
+        </Link>
+      </div>
     </>
   );
 }
