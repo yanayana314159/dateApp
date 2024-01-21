@@ -3,6 +3,7 @@ import { redirect, useRouter } from "next/navigation";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import FormComponent from "../../components/inputForm";
 
 const getProfiles = async (id: string) => {
   const res = await fetch(`http://localhost:3000/api/lover/${id}`);
@@ -11,8 +12,8 @@ const getProfiles = async (id: string) => {
   }
   const data = await res.json();
   const userProfile = data.profile;
-  const Lover = data.lover;
-  return { userProfile, Lover };
+  const loverProfile = data.lover_profile;
+  return { userProfile, loverProfile };
 };
 
 export default async function LoverPage() {
@@ -20,16 +21,36 @@ export default async function LoverPage() {
     data: { session },
   } = await checkSession("/userpage/auth");
   const user_id: string = session.user.id;
-  const { userProfile, Lover } = await getProfiles(user_id);
+  const { userProfile, loverProfile } = await getProfiles(user_id);
 
   const { uuid, name, email, lover_id, schedule } = userProfile;
+  const lover_email = loverProfile?.email.replace(/"/g, "");
 
   return (
     <>
-      <div>恋人の情報を入力してください</div>
-      <a>{Lover ? `${Lover}さん` : "恋人情報を記載してください"}</a>
+      <div>
+        <a>
+          {lover_email == null
+            ? "恋人のメールアドレス情報を登録してください"
+            : "恋人のメールアドレス情報を変更できます"}
+        </a>
+        {lover_id == null ? (
+          ""
+        ) : (
+          <>
+            <br />
+            あなたの恋人として設定されているメールアドレス：{lover_email}
+          </>
+        )}
+        <a></a>
+      </div>
       <br />
       <br />
+      <FormComponent
+        email={email}
+        lover_email={lover_email}
+        user_id={user_id}
+      />
 
       <Link href="/userpage/home">
         <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
