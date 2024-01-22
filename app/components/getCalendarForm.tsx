@@ -16,14 +16,6 @@ type Props = {
   user_id: string;
 };
 
-const convertArrayToObject = (array: []) => {
-  const result: any = {};
-  array.forEach((item, index) => {
-    result[index] = item;
-  });
-  return result;
-};
-
 const toEventsData = (events: any) => {
   return events?.items?.map(
     (event: { summary: String; start: any; end: any }) => {
@@ -51,18 +43,15 @@ const toEventsData = (events: any) => {
 };
 
 const postCalendar = async (postCalendarData: FormData, user_id: string) => {
-  console.log(postCalendarData.schedule);
-  const test = `{"schedule":{"title":"testです","start":"2024-02-24T06:00:00.000Z","end":"2024-02-24T07:00:00.000Z"}}`;
-  console.log(JSON.stringify(test));
-  const res = await fetch(`http://localhost:3000/api/postcalender/${user_id}`, {
+  const res = await fetch(`http://localhost:3000/api/postcalendar/${user_id}`, {
     method: "PUT",
-    body: JSON.stringify(test),
+    body: JSON.stringify(postCalendarData),
     headers: {
       "Content-Type": "application/json",
     },
   });
-  const result = await res.json();
-  console.log(result);
+  //console.log(res);
+  return res.json;
 };
 
 export default async function GetCalendarForm(props: Props) {
@@ -101,17 +90,16 @@ export default async function GetCalendarForm(props: Props) {
     eventsData = toEventsData(events);
 
     // console.log(eventsData);
-    const eventsDatatoJSON = JSON.stringify(eventsData);
     const postCalendarData: FormData = {
-      schedule: eventsDatatoJSON,
+      schedule: eventsData,
     };
     //console.log(postCalendarData);
     //console.log(postCalendarData.schedule);
     //イベントデータの送信
-    await postCalendar(postCalendarData, user_id);
+    const result = await postCalendar(postCalendarData, user_id);
   } catch (e: any) {
-    console.error(e);
     errorMessage = e.message;
+    //console.log(e);
   }
 
   return (
