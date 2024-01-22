@@ -12,11 +12,3 @@ export async function GET(request: NextRequest) {
   }
   return NextResponse.redirect("http://localhost:3000/userpage/home");
 }
-
-/*
-({
-    supabaseUrl: process.env.SUPABASE_URL,
-    supabaseKey: process.env.SUPABASE_ANON,
-  });
-
-  */

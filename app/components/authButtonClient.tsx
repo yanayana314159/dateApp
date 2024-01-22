@@ -15,6 +15,7 @@ const AuthButtonClient = ({ session }: { session: Session | null }) => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
+        scopes: "https://www.googleapis.com/auth/calendar.readonly",
         redirectTo: "http://localhost:3000/api/callback",
       },
     });
@@ -26,11 +27,21 @@ const AuthButtonClient = ({ session }: { session: Session | null }) => {
 
   return session ? (
     <>
-      <button onClick={handleSignOut}>Googleログアウト</button>
+      <button
+        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        onClick={handleSignOut}
+      >
+        Googleログアウト
+      </button>
     </>
   ) : (
     <>
-      <button onClick={handleSignIn}>Googleログイン</button>
+      <button
+        className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        onClick={handleSignIn}
+      >
+        Googleログイン
+      </button>
     </>
   );
 };
