@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 export function PostForm() {
   const router = useRouter();
-  const onSubmit = useCallback(async (formData) => {
+  const onSubmit = useCallback(async (formData: any) => {
     const res = await fetch("/api/createPost", {
       method: "POST",
       body: JSON.stringify(formData),

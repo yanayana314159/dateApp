@@ -11,11 +11,11 @@ export default async function Google() {
     data: { session },
   } = await supabase.auth.getSession();
 
-  /*if (session) {
+  if (session) {
     //セッションがあればhomeに飛びます
     redirect("/userpage/home");
   }
-*/
+
   return (
     <>
       <header>dateApp</header>
