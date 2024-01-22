@@ -25,15 +25,11 @@ export default async function Home() {
         <p>デートアプリのログイン後のホーム画面です</p>
         <Link href="/userpage/calendar">
           <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-            カレンダーページはこちら
+            デートプランを作成する
           </button>
         </Link>
         <br />
-        <Link href="/userpage/lover">
-          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-            恋人の情報はこちら
-          </button>
-        </Link>
+
         <br />
         <AuthButtonServer />
       </div>

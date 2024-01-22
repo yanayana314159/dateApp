@@ -591,6 +591,9 @@ video {
 .max-w-xl {
   max-width: 36rem;
 }
+.list-disc {
+  list-style-type: disc;
+}
 .appearance-none {
   -webkit-appearance: none;
      -moz-appearance: none;

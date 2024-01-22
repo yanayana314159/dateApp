@@ -1,7 +1,7 @@
 {
-  "/userpage/calendar/page": "app/userpage/calendar/page.js",
+  "/userpage/makeplans/page": "app/userpage/makeplans/page.js",
   "/userpage/auth/page": "app/userpage/auth/page.js",
-  "/userpage/home/page": "app/userpage/home/page.js",
-  "/userpage/lover/page": "app/userpage/lover/page.js",
-  "/api/postcalendar/[id]/route": "app/api/postcalendar/[id]/route.js"
+  "/api/lover/[id]/route": "app/api/lover/[id]/route.js",
+  "/userpage/calendar/page": "app/userpage/calendar/page.js",
+  "/userpage/lover/page": "app/userpage/lover/page.js"
 }
