@@ -32,7 +32,6 @@ export default async function LoverPage() {
         <div>
           <h2>3.予定の作成</h2>
           <br />
-          {JSON.stringify(user_schedule)}
         </div>
         {lovers_lover_id === user_id ? (
           <>

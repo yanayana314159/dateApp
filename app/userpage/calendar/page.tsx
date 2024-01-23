@@ -10,8 +10,6 @@ export default async function Page() {
   const user_id: string = session.user.id;
   return (
     <>
-      <header>dateApp</header>
-
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 m-10 border border-black-400">
         <h2>1.カレンダーの登録</h2>
         <a>

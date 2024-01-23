@@ -8,14 +8,10 @@ type Props = {
 const convertEvents = (events: any) => {
   const userEvents = [];
   for (const userEvent of events) {
-    const title = userEvent.title;
-    const startDate = new Date(userEvent.start).toLocaleString("ja-JP", {
-      timeZone: "Asia/Tokyo",
-    });
-    const endDate = new Date(userEvent.end).toLocaleString("ja-JP", {
-      timeZone: "Asia/Tokyo",
-    });
-    userEvents.push({ title, startDate, endDate });
+    const title = "";
+    const start = new Date(userEvent.start);
+    const end = new Date(userEvent.end);
+    userEvents.push({ title, start, end });
   }
   return userEvents;
   //
@@ -25,7 +21,7 @@ export default function ScheduleAdjustment(props: Props) {
   const loverSchedule = props.lover_schedule;
 
   //startとendがStringになっているのでDate型に変換して扱いやすいようにする
-  console.log(userSchedule);
+
   //ユーザーの予定をDate型に変換
   const userEvents = convertEvents(userSchedule);
   //恋人の予定をDate型に変換
@@ -48,7 +44,11 @@ export default function ScheduleAdjustment(props: Props) {
   }
   */
 
-  return <></>;
+  return (
+    <>
+      <a>{JSON.stringify(userEvents)}</a>
+    </>
+  );
 }
 
 /*

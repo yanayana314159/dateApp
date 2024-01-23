@@ -16,21 +16,60 @@ type Props = {
   user_id: string;
 };
 
-const toEventsData = (events: any) => {
+//DBにスケジュールを渡すデータの修正
+const convertToDBData = (events: any) => {
   return events?.items?.map(
     (event: { summary: String; start: any; end: any }) => {
       //日付の処理を行う
+      //時間と分がある場合の処理
+      const startDateTime = event.start.dateTime
+        ? new Date().setTime(
+            new Date(event.start.dateTime).getTime() + 9 * 60 * 60 * 1000
+          )
+        : null;
+
+      const endDateTime = event.end.dateTime
+        ? new Date().setTime(
+            new Date(event.end.dateTime).getTime() + 9 * 60 * 60 * 1000
+          )
+        : null;
+
+      //時間と分がない場合の処理
+      const startDate = event.start.date ? new Date(event.start.date) : null;
+      const endDate = event.end.date ? new Date(event.end.date) : null;
+
+      const start = startDateTime ? new Date(startDateTime) : startDate;
+      const end = endDateTime ? new Date(endDateTime) : endDate;
+
+      return {
+        title: event.summary,
+        start: start,
+        end: end,
+      };
+    }
+  );
+};
+
+//フルカレンダーに渡すデータの修正
+const convertToCalendarsData = (events: any) => {
+  return events?.items?.map(
+    (event: { summary: String; start: any; end: any }) => {
+      //日付の処理を行う
+      //時間と分がある場合の処理
       const startDateTime = event.start.dateTime
         ? new Date(event.start.dateTime).toLocaleString("ja-JP", {
             timeZone: "Asia/Tokyo",
           })
         : null;
-      const startDate = event.start.date ? new Date(event.start.date) : null;
+
       const endDateTime = event.end.dateTime
         ? new Date(event.end.dateTime).toLocaleString("ja-JP", {
             timeZone: "Asia/Tokyo",
           })
         : null;
+
+      //時間と分がない場合の処理
+      const startDate = event.start.date ? new Date(event.start.date) : null;
       const endDate = event.end.date ? new Date(event.end.date) : null;
 
       return {
@@ -41,7 +80,7 @@ const toEventsData = (events: any) => {
     }
   );
 };
-
+//DBに処理
 const postCalendar = async (postCalendarData: FormData, user_id: string) => {
   const res = await fetch(`http://localhost:3000/api/postcalendar/${user_id}`, {
     method: "PUT",
@@ -60,7 +99,8 @@ export default async function GetCalendarForm(props: Props) {
   const currentDate = new Date();
   const timeMin = currentDate.toISOString();
   const params = new URLSearchParams({ timeMin });
-  let eventsData = null;
+  let fullcalendarData = null;
+  let dbCalendarsData = null;
   let errorMessage = null;
 
   const {
@@ -86,20 +126,22 @@ export default async function GetCalendarForm(props: Props) {
     }
 
     const events: any | null = await response.json();
-    //カレンダー情報の処理
-    eventsData = toEventsData(events);
+    //情報の修正をする
 
-    // console.log(eventsData);
+    //FUllCalendarに渡すデータの処理
+    fullcalendarData = convertToCalendarsData(events);
+    //DBに渡すデータの処理
+    dbCalendarsData = convertToDBData(events);
+
+    //DBに渡すデータの整形
     const postCalendarData: FormData = {
-      schedule: eventsData,
+      schedule: dbCalendarsData,
     };
-    //console.log(postCalendarData);
-    //console.log(postCalendarData.schedule);
     //イベントデータの送信
-    const result = await postCalendar(postCalendarData, user_id);
+    await postCalendar(postCalendarData, user_id);
   } catch (e: any) {
     errorMessage = e.message;
-    //console.log(e);
+    console.log(e);
   }
 
   return (
@@ -107,8 +149,8 @@ export default async function GetCalendarForm(props: Props) {
       <br />
       <p>カレンダー情報</p>
 
-      {eventsData ? (
-        <FullCalendarPage event={eventsData} />
+      {fullcalendarData ? (
+        <FullCalendarPage event={fullcalendarData} />
       ) : (
         <>
           <p>
