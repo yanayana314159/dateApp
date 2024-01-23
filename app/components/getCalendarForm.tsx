@@ -42,7 +42,7 @@ const convertToDBData = (events: any) => {
       const end = endDateTime ? new Date(endDateTime) : endDate;
 
       return {
-        title: event.summary,
+        title: "",
         start: start,
         end: end,
       };

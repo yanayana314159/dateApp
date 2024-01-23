@@ -1,21 +1,39 @@
 "use client";
+import calculateFreeTime from "./calculateFreeTime";
 
 type Props = {
   user_schedule: [{ title: string; start: Date; end: Date }];
   lover_schedule: [{ title: string; start: Date; end: Date }];
 };
 
-const convertEvents = (events: any) => {
-  const userEvents = [];
-  for (const userEvent of events) {
-    const title = "";
+const convertEvents = (userSchedule: any, loverSchedule: any) => {
+  const Events = [];
+  const today = new Date();
+  const deadline = new Date();
+  deadline.setDate(today.getDate() + 10);
+  console.log(deadline);
+  //ユーザーの情報を入れる
+  for (const userEvent of userSchedule) {
     const start = new Date(userEvent.start);
     const end = new Date(userEvent.end);
-    userEvents.push({ title, start, end });
+    Events.push({ start, end });
   }
-  return userEvents;
+  //恋人の情報を入れる
+  for (const loverEvent of loverSchedule) {
+    const start = new Date(loverEvent.start);
+    const end = new Date(loverEvent.end);
+    Events.push({ start, end });
+  }
+  const sortedEvents = Events.sort(
+    (a, b) => a.start.getTime() - b.start.getTime()
+  );
+  const filterEvents = sortedEvents.filter((event) => event.start <= deadline);
+  return filterEvents;
   //
 };
+//////////////////
+
+//////////////////
 export default function ScheduleAdjustment(props: Props) {
   const userSchedule = props.user_schedule;
   const loverSchedule = props.lover_schedule;
@@ -23,11 +41,13 @@ export default function ScheduleAdjustment(props: Props) {
   //startとendがStringになっているのでDate型に変換して扱いやすいようにする
 
   //ユーザーの予定をDate型に変換
-  const userEvents = convertEvents(userSchedule);
+  const Events = convertEvents(userSchedule, loverSchedule);
+  const x = calculateFreeTime(Events);
+  //myFunction(Events);
   //恋人の予定をDate型に変換
-  const loverEvents = convertEvents(loverSchedule);
+  //const loverEvents = convertEvents(loverSchedule);
   //console.log(userEvents);
-  //console.log(loverEvents);
+  console.log(x);
 
   /*
 
@@ -46,7 +66,9 @@ export default function ScheduleAdjustment(props: Props) {
 
   return (
     <>
-      <a>{JSON.stringify(userEvents)}</a>
+      <div>
+        <a>{x}</a>
+      </div>
     </>
   );
 }
