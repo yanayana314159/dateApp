@@ -1,4 +1,4 @@
-import { string } from "yargs";
+import { s } from "@fullcalendar/core/internal-common";
 
 export default function calculateFreeTime(events: any) {
   // 取得したカレンダーから空き時間を2進数形式で抽出
@@ -7,9 +7,10 @@ export default function calculateFreeTime(events: any) {
   // Date形式に戻す
   const emptyTimeOfDays = changeBitToDate(bitEmptyTimeOfDays);
   // 出力
-  const freeTime = displayDays(emptyTimeOfDays);
 
-  return freeTime;
+  const freeTime = displayDays(emptyTimeOfDays);
+  const fullcalendarData = convertToFullcalendarData(freeTime);
+  return fullcalendarData;
 
   // 日毎に、空き時間が「10:00-11:30,14:15-15:45」のような形式で出力される
 }
@@ -18,8 +19,26 @@ export default function calculateFreeTime(events: any) {
  * 空き日程をbit形式で返却
  */
 
+const convertToFullcalendarData = (freeTime: string[]) => {
+  const events: any = [];
+  freeTime.map((schedule) => {
+    const startStr = schedule.split("-")[0];
+    const endStr = schedule.split("-")[1];
+    const start = new Date(startStr);
+    const end = new Date(endStr);
+
+    const event = {
+      title: "デートできます🥂",
+      start: start,
+      end: end,
+    };
+    //console.log(event);
+    events.push(event);
+  });
+  return events;
+};
 function calculateEmptyTimeOfDays(events: { start: Date; end: Date }[]) {
-  const bitDays: [string, string] = [];
+  const bitDays: { [key: string]: string } = {};
 
   events.map((event) => {
     const bitDay = changeDateToBit(event);
@@ -90,8 +109,9 @@ function changeDateToBit(event: { start: Date; end: Date }) {
  * Bit形式の日付をDate型に戻す
  * @return {<日付> : {"start": <日時>, "end": <日時>}[]}[]
  */
-function changeBitToDate(bitDays: [string, string]) {
-  const freeTimes = {};
+
+function changeBitToDate(bitDays: { [key: string]: string }) {
+  const freeTimes: { [key: string]: { start: string; end: string }[] } = {};
 
   Object.keys(bitDays).forEach((key) => {
     // 先頭の「0b」除去
@@ -141,15 +161,22 @@ function changeBitToDate(bitDays: [string, string]) {
  * 日時をシートに表示
  * @param days {<日付> : {"start": <日時>, "end": <日時>}[]}[]
  */
-function displayDays(days) {
-  const freeTime = [];
+function displayDays(days: {
+  [key: string]: { start: string; end: string }[];
+}) {
+  const freeTime: string[] = [];
   Object.keys(days).forEach((key, i) => {
-    let value = "";
-    days[key].forEach((e) => {
-      value += `${e.start}-${e.end}` + ",";
-    });
+    if (days[key].length === 0) {
+      const value = `${key} 09:00-${key} 23:00`;
+      freeTime.push(value);
+    } else {
+      days[key].forEach((e) => {
+        const value = `${e.start}-${e.end}`;
+        freeTime.push(value);
+      });
+    }
+
     // 出力
-    freeTime.push(value.slice(0, -1));
   });
   return freeTime;
 }
@@ -157,7 +184,7 @@ function displayDays(days) {
 /**
  * YYYY/MM/DDを返す
  */
-function getDateLabel(date) {
+function getDateLabel(date: Date) {
   return `${date.getFullYear()}/${("0" + (date.getMonth() + 1)).slice(-2)}/${(
     "0" + date.getDate()
   ).slice(-2)}`;
@@ -166,7 +193,7 @@ function getDateLabel(date) {
 /**
  * hh:mmを返す
  */
-function getTimeLabel(date) {
+function getTimeLabel(date: Date) {
   return `${("0" + date.getHours()).slice(-2)}:${(
     "0" + date.getMinutes()
   ).slice(-2)}`;
@@ -175,7 +202,7 @@ function getTimeLabel(date) {
 /**
  * YYYY/MM/DD hh:mmを返す
  */
-function getDateTimeLabel(date) {
+function getDateTimeLabel(date: Date) {
   return `${date.getFullYear()}/${("0" + (date.getMonth() + 1)).slice(-2)}/${(
     "0" + date.getDate()
   ).slice(-2)} ${("0" + date.getHours()).slice(-2)}:${(

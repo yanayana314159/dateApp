@@ -1,9 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
-import checkSession from "../../../components/checkSession";
-import { string } from "yargs";
+import prisma from "../../../../lib/prisma";
 
-const prisma = new PrismaClient();
 
 async function main() {
     try {

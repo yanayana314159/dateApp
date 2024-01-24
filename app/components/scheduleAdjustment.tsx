@@ -1,5 +1,6 @@
 "use client";
 import calculateFreeTime from "./calculateFreeTime";
+import FullCalendarReservationPage from "./fullCalendarReservation";
 
 type Props = {
   user_schedule: [{ title: string; start: Date; end: Date }];
@@ -27,7 +28,10 @@ const convertEvents = (userSchedule: any, loverSchedule: any) => {
   const sortedEvents = Events.sort(
     (a, b) => a.start.getTime() - b.start.getTime()
   );
-  const filterEvents = sortedEvents.filter((event) => event.start <= deadline);
+  //イベントの始まりがdeadLine(10日後まで)より前で、イベントの終わりが今日以降のイベントを抽出
+  const filterEvents = sortedEvents.filter(
+    (event) => event.start <= deadline && event.end >= today
+  );
   return filterEvents;
   //
 };
@@ -42,12 +46,11 @@ export default function ScheduleAdjustment(props: Props) {
 
   //ユーザーの予定をDate型に変換
   const Events = convertEvents(userSchedule, loverSchedule);
-  const x = calculateFreeTime(Events);
+  const Event = calculateFreeTime(Events);
   //myFunction(Events);
   //恋人の予定をDate型に変換
   //const loverEvents = convertEvents(loverSchedule);
   //console.log(userEvents);
-  console.log(x);
 
   /*
 
@@ -67,7 +70,8 @@ export default function ScheduleAdjustment(props: Props) {
   return (
     <>
       <div>
-        <a>{x}</a>
+        <a>{JSON.stringify(Events)}</a>
+        <FullCalendarReservationPage event={Event} />
       </div>
     </>
   );
@@ -77,4 +81,9 @@ export default function ScheduleAdjustment(props: Props) {
 <a>{JSON.stringify(user_schedule)}</a>
       <br />
       <a>{JSON.stringify(lover_schedule)}</a>
+              <ul>
+          {x.map((date, i) => {
+            return <li key={i}>{date}</li>;
+          })}
+        </ul>
 */
