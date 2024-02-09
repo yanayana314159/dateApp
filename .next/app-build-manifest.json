@@ -1,36 +1,46 @@
 {
   "pages": {
-    "/userpage/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/userpage/layout.css",
-      "static/chunks/app/userpage/layout.js"
-    ],
     "/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/userpage/home/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/userpage/home/page.js"
+    ],
+    "/userpage/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/userpage/layout.css",
+      "static/chunks/app/userpage/layout.js"
+    ],
     "/userpage/calendar/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/userpage/calendar/page.js"
-    ],
-    "/userpage/lover/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/userpage/lover/page.js"
     ],
     "/userpage/makeplans/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/userpage/makeplans/page.js"
     ],
-    "/not-found": [
+    "/userpage/kibun/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/not-found.js"
+      "static/chunks/app/userpage/kibun/page.js"
+    ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
+    ],
+    "/userpage/auth/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/userpage/auth/page.js"
     ]
   }
 }

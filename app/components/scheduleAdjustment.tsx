@@ -32,6 +32,7 @@ const convertEvents = (userSchedule: any, loverSchedule: any) => {
   const filterEvents = sortedEvents.filter(
     (event) => event.start <= deadline && event.end >= today
   );
+
   return filterEvents;
   //
 };
@@ -46,7 +47,7 @@ export default function ScheduleAdjustment(props: Props) {
 
   //ユーザーの予定をDate型に変換
   const Events = convertEvents(userSchedule, loverSchedule);
-  const Event = calculateFreeTime(Events);
+  const { freeTime, fullcalendarData } = calculateFreeTime(Events);
   //myFunction(Events);
   //恋人の予定をDate型に変換
   //const loverEvents = convertEvents(loverSchedule);
@@ -70,8 +71,11 @@ export default function ScheduleAdjustment(props: Props) {
   return (
     <>
       <div>
-        <a>{JSON.stringify(Events)}</a>
-        <FullCalendarReservationPage event={Event} />
+        <ul>
+          {freeTime.map((date, i) => {
+            return <li key={i}>{date}</li>;
+          })}
+        </ul>
       </div>
     </>
   );
@@ -86,4 +90,5 @@ export default function ScheduleAdjustment(props: Props) {
             return <li key={i}>{date}</li>;
           })}
         </ul>
+               <FullCalendarReservationPage event={fullcalendarData} />
 */

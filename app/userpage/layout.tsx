@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../global.css";
 import Image from "next/image";
 import AuthButtonServer from "../components/authButtonServer";
+import { AuthAdminApi } from "@supabase/supabase-js";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +19,8 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <body className={inter.className}>
-        <header className="text-gray-600 body-font">
+      <body className="bg-green-100">
+        <header className="bg-green-200 text-gray-600 body-font ">
           <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
             <a href="/userpage/home">
               <Image
@@ -55,3 +56,5 @@ export default function RootLayout({
     </>
   );
 }
+
+//      <body className={inter.className}>

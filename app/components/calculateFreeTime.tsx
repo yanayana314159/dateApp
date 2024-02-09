@@ -2,15 +2,17 @@ import { s } from "@fullcalendar/core/internal-common";
 
 export default function calculateFreeTime(events: any) {
   // 取得したカレンダーから空き時間を2進数形式で抽出
-  const bitEmptyTimeOfDays = calculateEmptyTimeOfDays(events);
 
+  const bitEmptyTimeOfDays = calculateEmptyTimeOfDays(events);
+  console.log(bitEmptyTimeOfDays);
   // Date形式に戻す
   const emptyTimeOfDays = changeBitToDate(bitEmptyTimeOfDays);
   // 出力
 
   const freeTime = displayDays(emptyTimeOfDays);
+
   const fullcalendarData = convertToFullcalendarData(freeTime);
-  return fullcalendarData;
+  return { freeTime, fullcalendarData };
 
   // 日毎に、空き時間が「10:00-11:30,14:15-15:45」のような形式で出力される
 }

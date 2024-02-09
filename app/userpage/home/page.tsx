@@ -22,11 +22,19 @@ export default async function Home() {
 
         <p>デートアプリのログイン後のホーム画面です</p>
         <br />
-        <Link href="/userpage/calendar">
-          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-            デートプランを作成する
+        <p>どちらからデートプランを作成しますか？</p>
+        <br />
+        <Link href="/userpage/kibun">
+          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4  mx-6 border border-gray-400 rounded shadow">
+            気分から
           </button>
         </Link>
+        <Link href="/userpage/calendar">
+          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4  border border-gray-400 rounded shadow">
+            日程から
+          </button>
+        </Link>
+
         <br />
       </div>
     </>
