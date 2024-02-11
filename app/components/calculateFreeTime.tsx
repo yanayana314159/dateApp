@@ -4,7 +4,7 @@ export default function calculateFreeTime(events: any) {
   // 取得したカレンダーから空き時間を2進数形式で抽出
 
   const bitEmptyTimeOfDays = calculateEmptyTimeOfDays(events);
-  console.log(bitEmptyTimeOfDays);
+  //console.log(bitEmptyTimeOfDays);
   // Date形式に戻す
   const emptyTimeOfDays = changeBitToDate(bitEmptyTimeOfDays);
   // 出力

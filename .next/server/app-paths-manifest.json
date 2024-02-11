@@ -1,6 +1,5 @@
 {
-  "/page": "app/page.js",
-  "/userpage/calendar/page": "app/userpage/calendar/page.js",
   "/userpage/home/page": "app/userpage/home/page.js",
+  "/userpage/calendar/page": "app/userpage/calendar/page.js",
   "/userpage/kibun/page": "app/userpage/kibun/page.js"
 }

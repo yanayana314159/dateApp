@@ -27,7 +27,7 @@ export default function RootLayout({
                 src="/logo.jpg"
                 alt="デートプランのロゴです"
                 width={30}
-                height={60}
+                height={30}
                 className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
               />
             </a>

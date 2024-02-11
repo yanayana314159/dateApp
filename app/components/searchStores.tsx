@@ -1,11 +1,28 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 export default function SearchStores() {
   const radioclass: string =
     "inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer white:hover:text-gray-300 white:border-gray-700 white:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 white:text-gray-400 white:bg-gray-800 white:hover:bg-gray-700";
+  const [kibun, setKibun] = useState("");
+  const [located, setLocated] = useState("");
+
   const search = () => {
-    console.log("search");
+    if (kibun === "" || located === "") {
+      console.log("気分と場所を選択してください");
+    } else {
+      console.log(`${kibun}で${located}`);
+    }
+  };
+  const handleKibunChange = (event: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setKibun(event.target.value);
+  };
+  const hadleLocatedChange = (event: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setLocated(event.target.value);
   };
 
   return (
@@ -22,6 +39,8 @@ export default function SearchStores() {
               name="kibun"
               value="1"
               className="hidden peer"
+              checked={kibun === "1"}
+              onChange={handleKibunChange}
               required
             />
             <label htmlFor="kibun-funny" className={radioclass}>
@@ -36,6 +55,8 @@ export default function SearchStores() {
               id="kibun-calm"
               name="kibun"
               value="2"
+              checked={kibun === "2"}
+              onChange={handleKibunChange}
               className="hidden peer"
             />
             <label htmlFor="kibun-calm" className={radioclass}>
@@ -49,7 +70,9 @@ export default function SearchStores() {
               type="radio"
               id="kibun-gorgeous"
               name="kibun"
-              value="2"
+              value="3"
+              checked={kibun === "3"}
+              onChange={handleKibunChange}
               className="hidden peer"
             />
             <label htmlFor="kibun-gorgeous" className={radioclass}>
@@ -63,7 +86,9 @@ export default function SearchStores() {
               type="radio"
               id="kibun-romantic"
               name="kibun"
-              value="2"
+              value="4"
+              checked={kibun === "4"}
+              onChange={handleKibunChange}
               className="hidden peer"
             />
             <label htmlFor="kibun-romantic" className={radioclass}>
@@ -80,8 +105,10 @@ export default function SearchStores() {
               type="radio"
               id="located-sibuya"
               name="located"
-              value="1"
+              value="渋谷"
+              checked={located === "渋谷"}
               className="hidden peer"
+              onChange={hadleLocatedChange}
               required
             />
             <label htmlFor="located-sibuya" className={radioclass}>
@@ -95,8 +122,10 @@ export default function SearchStores() {
               type="radio"
               id="located-ueno"
               name="located"
-              value="2"
+              value="上野"
+              checked={located === "上野"}
               className="hidden peer"
+              onChange={hadleLocatedChange}
             />
             <label htmlFor="located-ueno" className={radioclass}>
               <div className="block">
