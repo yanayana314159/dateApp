@@ -18,18 +18,9 @@ export default async function Google() {
 
   return (
     <>
-      <header>dateApp</header>
-      <div>
+      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 m-10 border border-black-400">
         <h2>ログインページです</h2>
         <a>googleアカウントでログインを行なってください</a>
-      </div>
-      <div>
-        <main>
-          <div>
-            <AuthButtonServer />
-          </div>
-        </main>
-        <footer></footer>
       </div>
     </>
   );

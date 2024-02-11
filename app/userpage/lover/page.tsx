@@ -27,6 +27,17 @@ export default async function LoverPage() {
     <>
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 m-10 border border-black-400">
         <div>
+          <h2>2.恋人の情報の登録</h2>
+          <a>恋人の情報を登録したら「次へ」を押してください</a> <br />
+          <a>既に登録されている場合にはそのまま「次へ」を押してください</a>
+          <br />
+          <Link className="" href="/userpage/makeplans">
+            <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+              次へ
+            </button>
+          </Link>
+          <br />
+          <br />
           <a>
             {lover_email == null
               ? "恋人のメールアドレス情報を登録してください"
@@ -42,8 +53,6 @@ export default async function LoverPage() {
           )}
           <a></a>
         </div>
-        <br />
-        <br />
         <FormComponent
           email={email}
           lover_email={lover_email}
@@ -53,6 +62,11 @@ export default async function LoverPage() {
         <Link href="/userpage/home">
           <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
             ホームに戻る
+          </button>
+        </Link>
+        <Link href="/userpage/calendar">
+          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+            1.カレンダーに戻る
           </button>
         </Link>
       </div>

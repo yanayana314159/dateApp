@@ -15,27 +15,27 @@ export default async function Home() {
   const name = JSON.stringify(session.user.user_metadata.full_name);
   return (
     <>
-      <header>dateApp</header>
-
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 m-10 border border-black-400">
         <h2>認証済みのログインページです</h2>
         <a>ようこそ{name}さん</a>
         <br />
 
         <p>デートアプリのログイン後のホーム画面です</p>
+        <br />
+        <p>どちらからデートプランを作成しますか？</p>
+        <br />
+        <Link href="/userpage/kibun">
+          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4  mx-6 border border-gray-400 rounded shadow">
+            気分から
+          </button>
+        </Link>
         <Link href="/userpage/calendar">
-          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-            カレンダーページはこちら
+          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4  border border-gray-400 rounded shadow">
+            日程から
           </button>
         </Link>
+
         <br />
-        <Link href="/userpage/lover">
-          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-            恋人の情報はこちら
-          </button>
-        </Link>
-        <br />
-        <AuthButtonServer />
       </div>
     </>
   );
