@@ -18,10 +18,10 @@ const FullCalendarReservationPage = ({ event }: ItemProps) => {
     if (currentCalendar) {
       // FullCalendar コンポーネントが初期化された後の処理
       const api = currentCalendar.getApi();
-      const calendarEl = api.el;
+      //const calendarEl = api.el;
 
       // ここで calendarEl を使用できます
-      console.log(calendarEl);
+      //console.log(calendarEl);
 
       // 例えば、カレンダーの高さを変更する場合
       // calendarEl.style.height = "500px";
