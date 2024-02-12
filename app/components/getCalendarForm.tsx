@@ -82,7 +82,8 @@ const convertToCalendarsData = (events: any) => {
 };
 //DBに処理
 const postCalendar = async (postCalendarData: FormData, user_id: string) => {
-  const res = await fetch(`http://localhost:3000/api/postcalendar/${user_id}`, {
+  const projectBaseUrl = process.env.NEXT_PUBLIC_PROJECT_BASE_URL;
+  const res = await fetch(`${projectBaseUrl}/api/postcalendar/${user_id}`, {
     method: "PUT",
     body: JSON.stringify(postCalendarData),
     headers: {

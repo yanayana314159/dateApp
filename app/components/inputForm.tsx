@@ -21,6 +21,7 @@ export default function FormComponent(props: Props) {
   const email = props.email;
   const [lover_email, setLover_email] = useState(props.lover_email);
   const user_id = props.user_id;
+  const projectBaseUrl = process.env.NEXT_PUBLIC_PROJECT_BASE_URL;
   const [sendBtn, setSendBtn] = useState(lover_email ? "変更" : "登録");
   const {
     register,
@@ -34,7 +35,7 @@ export default function FormComponent(props: Props) {
   }, [lover_email]);
 
   const postLoverID = async (data: FormData) => {
-    const res = await fetch(`http://localhost:3000/api/lover/${user_id}`, {
+    const res = await fetch(`${projectBaseUrl}/api/lover/${user_id}`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {
@@ -45,7 +46,7 @@ export default function FormComponent(props: Props) {
     console.log(result);
   };
   const deleteLoverID = async () => {
-    const res = await fetch(`http://localhost:3000/api/lover/${user_id}`, {
+    const res = await fetch(`${projectBaseUrl}/api/lover/${user_id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

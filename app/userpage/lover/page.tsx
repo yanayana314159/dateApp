@@ -3,7 +3,8 @@ import Link from "next/link";
 import FormComponent from "../../components/inputForm";
 
 const getProfiles = async (id: string) => {
-  const res = await fetch(`http://localhost:3000/api/lover/${id}`);
+  const projectBaseUrl = process.env.NEXT_PUBLIC_PROJECT_BASE_URL;
+  const res = await fetch(`${projectBaseUrl}/api/lover/${id}`);
   if (!res.ok) {
     throw new Error("API request failed");
   }

@@ -10,13 +10,14 @@ import { useRouter } from "next/navigation";
 const AuthButtonClient = ({ session }: { session: Session | null }) => {
   const supabase = createClientComponentClient();
   const router = useRouter();
+  const projectBaseUrl = process.env.NEXT_PUBLIC_PROJECT_BASE_URL;
 
   const handleSignIn = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         scopes: "https://www.googleapis.com/auth/calendar.readonly",
-        redirectTo: "http://localhost:3000/api/callback",
+        redirectTo: `${projectBaseUrl}/api/callback`,
       },
     });
   };
