@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   if (code) {
     const supabase = createRouteHandlerClient({ cookies });
     await supabase.auth.exchangeCodeForSession(code);
-    console.log(projectBaseUrl);
   }
-  return NextResponse.redirect(`/userpage/home`);
+  alert(projectBaseUrl)
+  return NextResponse.redirect(`https://date-app-opal.vercel.app/userpage/home`);
 }
