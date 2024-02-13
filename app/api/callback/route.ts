@@ -12,5 +12,5 @@ export async function GET(request: NextRequest) {
     await supabase.auth.exchangeCodeForSession(code);
     console.log(projectBaseUrl);
   }
-  return NextResponse.redirect(`https://date-app-opal.vercel.app/userpage/home`);
+  return NextResponse.redirect(`/userpage/home`);
 }
